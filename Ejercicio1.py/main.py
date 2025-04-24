@@ -1,55 +1,31 @@
-import math
+# Se importa la función ejecutar_simulacion desde el módulo lanzador
+from lanzador import ejecutar_simulacion
 
-class Estrella:
-    def __init__(self, x=0, y=0, z=0):
-        self.x = x
-        self.y = y
-        self.z = z
+# Se define la función principal del programa
+def main():
+    # Se ejecuta la simulación para obtener la galaxia
+    galaxia = ejecutar_simulacion()
 
-    def __str__(self):
-        return f"Estrella({self.x}, {self.y}, {self.z})"
+    # Se muestran las estrellas registradas en la galaxia
+    print("🌌 Estrellas registradas:")
+    for estrella in galaxia.mostrar_estrellas():
+        print("  ", estrella)
 
-    def galaxia(self):
-        # Clasificación simple por cuadrantes galácticos (ejemplo didáctico)
-        if self.x >= 0 and self.y >= 0 and self.z >= 0:
-            return "Galaxia Andrómeda"
-        elif self.x < 0 and self.y >= 0:
-            return "Galaxia Vía Láctea"
-        elif self.x < 0 and self.y < 0:
-            return "Galaxia Sombrero"
-        else:
-            return "Galaxia Desconocida"
+    # Se muestra la clasificación de las estrellas por galaxia
+    print("\n🛰 Clasificación por galaxia:")
+    for estrella, nombre in galaxia.clasificar_estrellas():
+        print(f"  {estrella} → {nombre}")
 
-    def distancia(self, otra):
-        dx = self.x - otra.x
-        dy = self.y - otra.y
-        dz = self.z - otra.z
-        return math.sqrt(dx**2 + dy**2 + dz**2)
+    # Se muestran las distancias calculadas entre las estrellas
+    print("\n📏 Distancias entre estrellas:")
+    for e1, e2, distancia in galaxia.calcular_distancias():
+        print(f"  {e1} ↔ {e2} = {distancia:.2f}")
 
-    def distancia_origen(self):
-        return math.sqrt(self.x**2 + self.y**2 + self.z**2)
+    # Se determina y muestra la estrella más lejana del origen
+    mas_lejana = galaxia.estrella_mas_lejana()
+    if mas_lejana:
+        print(f"\n🌠 La estrella más lejana del origen es: {mas_lejana} con una distancia de {mas_lejana.distancia_origen():.2f}")
 
-# 1. Crear estrellas
-estrella_a = Estrella(2, 3, 1)
-estrella_b = Estrella(4, 4, 4)
-estrella_c = Estrella(-3, -1, 0)
-
-# 2. Imprimir estrellas
-print(estrella_a)
-print(estrella_b)
-print(estrella_c)
-
-# 3. Determinar galaxias
-print("Galaxia A:", estrella_a.galaxia())
-print("Galaxia B:", estrella_b.galaxia())
-print("Galaxia C:", estrella_c.galaxia())
-
-# 4. Calcular distancias
-print("Distancia A ↔ B:", estrella_a.distancia(estrella_b))
-print("Distancia B ↔ C:", estrella_b.distancia(estrella_c))
-
-# 5. Encontrar estrella más lejana del origen
-estrellas = [estrella_a, estrella_b, estrella_c]
-mas_lejana = max(estrellas, key=lambda e: e.distancia_origen())
-
-print(f"La estrella más lejana del origen es: {mas_lejana} con una distancia de {mas_lejana.distancia_origen()}")
+# Punto de entrada del programa
+if __name__ == "__main__":
+    main()
