@@ -1,16 +1,16 @@
 # Importamos la clase 'MagiaNumerica' desde el módulo 'procesador_magia'
 from procesador_magia import MagiaNumerica
 
-# Definimos la función principal 'ejecutar'
-def ejecutar():
-    # Creamos una lista de datos numéricos
-    datos = [1, 2, 3, 4, 5, 6, 2, 4, 8, 9, 10]
+# Definimos la función 'magia_numerica' que toma una lista como argumento
+def magia_numerica(lista_original):
+    # Creamos una instancia de la clase 'MagiaNumerica' con la lista proporcionada
+    procesador = MagiaNumerica(lista_original)
     
-    # Instanciamos un objeto de la clase 'MagiaNumerica' con los datos
-    magia = MagiaNumerica(datos)
+    # Llamamos al método 'procesar' para realizar las operaciones necesarias
+    procesador.procesar()
     
-    # Llamamos al método 'procesar' para realizar operaciones sobre los datos
-    magia.procesar()
+    # Llamamos al método 'mostrar_resultado' para imprimir el resultado
+    procesador.mostrar_resultado()
     
-    # Llamamos al método 'mostrar_resultado' para mostrar los resultados procesados
-    magia.mostrar_resultado()
+    # Retornamos el resultado obtenido mediante el método 'obtener_resultado'
+    return procesador.obtener_resultado()

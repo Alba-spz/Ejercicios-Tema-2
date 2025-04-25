@@ -1,50 +1,27 @@
 class MagiaNumerica:
     def __init__(self, lista_original):
-        # Inicializa la clase con la lista original y otras variables necesarias
+        # Constructor que inicializa la lista original, la lista procesada y un indicador de resultado válido
         self.lista_original = lista_original
-        self.lista_sin_duplicados = []  # Lista sin elementos duplicados
-        self.lista_ordenada = []        # Lista ordenada en orden descendente
-        self.lista_pares = []           # Lista con solo números pares
-        self.suma = 0                   # Suma de los números pares
-        self.nueva_lista = []           # Nueva lista con la suma y los números pares
-        self.verificacion = False       # Verificación de la condición de suma
+        self.lista_procesada = []  # Lista procesada que se generará después
+        self.resultado_valido = False  # Indicador de si el resultado cumple la condición
 
     def procesar(self):
-        # Ejecuta todos los pasos del procesamiento en orden
-        self.eliminar_duplicados()
-        self.ordenar_desc()
-        self.filtrar_pares()
-        self.calcular_suma()
-        self.insertar_suma()
-        self.verificar()
-        return self
-
-    def eliminar_duplicados(self):
-        # Elimina los elementos duplicados de la lista original
-        self.lista_sin_duplicados = list(set(self.lista_original))
-
-    def ordenar_desc(self):
-        # Ordena la lista sin duplicados en orden descendente
-        self.lista_ordenada = sorted(self.lista_sin_duplicados, reverse=True)
-
-    def filtrar_pares(self):
-        # Filtra los números pares de la lista ordenada
-        self.lista_pares = [n for n in self.lista_ordenada if n % 2 == 0]
-
-    def calcular_suma(self):
-        # Calcula la suma de los números pares
-        self.suma = sum(self.lista_pares)
-
-    def insertar_suma(self):
-        # Inserta la suma al inicio de la lista de números pares
-        self.nueva_lista = [self.suma] + self.lista_pares
-
-    def verificar(self):
-        # Verifica si la suma de los elementos desde el segundo coincide con el primero
-        self.verificacion = sum(self.nueva_lista[1:]) == self.nueva_lista[0]
+        # Método para procesar la lista original y transformarla según las reglas
+        lista = list(set(self.lista_original))  # 1. Eliminar duplicados convirtiendo la lista en un conjunto y luego de vuelta a lista
+        lista = sorted(lista, reverse=True)     # 2. Ordenar la lista en orden descendente
+        lista = [n for n in lista if n % 2 == 0]  # 3. Filtrar la lista para conservar solo los números pares
+        suma = sum(lista)                        # 4. Calcular la suma de todos los números en la lista filtrada
+        self.lista_procesada = [suma] + lista    # 5. Crear la lista procesada colocando la suma como el primer elemento
+        # Verificar si la suma de los elementos desde el segundo en adelante es igual al primer elemento
+        self.resultado_valido = sum(self.lista_procesada[1:]) == self.lista_procesada[0]
 
     def mostrar_resultado(self):
-        # Muestra los resultados del procesamiento
-        print("Lista original: ", self.lista_original)
-        print("Lista transformada: ", self.nueva_lista)
-        print("¿La suma de los elementos desde el segundo es igual al primero?", self.verificacion)
+        # Método para imprimir los resultados del procesamiento
+        print("Lista original:", self.lista_original)  # Imprimir la lista original
+        print("Lista transformada:", self.lista_procesada)  # Imprimir la lista procesada
+        # Imprimir si la suma desde el segundo elemento es igual al primer elemento
+        print("¿La suma desde el segundo elemento es igual al primero?:", self.resultado_valido)
+
+    def obtener_resultado(self):
+        # Método para obtener los resultados como una tupla
+        return self.lista_procesada, self.resultado_valido  # Retorna la lista procesada y el indicador de resultado válido
